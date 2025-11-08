@@ -122,18 +122,28 @@ const displayMovements = function (movements, sort = false) {
         <div class="movements__type movements__type--${type}">${
       index + 1
     } ${type}</div>
-        <div class="movements__value">${move}€</div>
+        <div class="movements__value">${move.toFixed(2)}€</div>
       </div>
         `;
     // DESC the following method insert the html to the tag
     containerMovements.insertAdjacentHTML('afterbegin', rowHTML);
+
+    // NOTE just changing the style to look better:
+    // DESC selecting even rows
+    document
+      .querySelectorAll('.movements__row')
+      .forEach((row, i) =>
+        i % 2 === 0
+          ? (row.style.backgroundColor = '#949090ff')
+          : (row.style.backgroundColor = '#bebebeff')
+      );
   });
 };
 
 // FIXME Need a function to calculate and show the balance
 const calcDisplayBalance = function (account) {
   account.balance = account.movements.reduce((acc, cur) => acc + cur, 0);
-  labelBalance.textContent = `${account.balance}€`;
+  labelBalance.textContent = `${account.balance.toFixed(2)}€`;
 };
 
 // FIXME Need a function to calculate and display the summary for "IN", "OUT", "INTEREST"
@@ -156,9 +166,9 @@ const calcDisplaySummary = function (account) {
       0
     );
 
-  labelSumIn.textContent = `${IN}€`;
-  labelSumOut.textContent = `${Math.abs(OUT)}€`;
-  labelSumInterest.textContent = `${INTEREST}€`;
+  labelSumIn.textContent = `${IN.toFixed(2)}€`;
+  labelSumOut.textContent = `${Math.abs(OUT).toFixed(2)}€`;
+  labelSumInterest.textContent = `${INTEREST.toFixed(2)}€`;
 };
 
 // FIXME Need a function that does all the updates in display the summary, balance, movements
@@ -175,11 +185,11 @@ const removeUI = function (account) {};
 // calcDisplaySummary(currentAccount);
 ///////////////////////////////////////
 // TODO Event handlers
+
 // NOTE we should first set the current account to undefined
 let currentAccount;
 let receiverAccount;
 let transferAmount;
-let loanAmount;
 
 // FIXME "Login Button" When user logs in, its account must show up
 btnLogin.addEventListener('click', function (e) {
@@ -275,4 +285,25 @@ btnSort.addEventListener('click', function (e) {
   //DESC this is because every time you click on sort button, it will show you original or sorted data
 });
 
+// FIXME "Loan Button" When user asks for Loan
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const loanAmount = Math.floor(Number(inputLoanAmount.value));
+
+  if (
+    loanAmount &&
+    loanAmount > 0 &&
+    currentAccount.movements.some(move => move >= loanAmount * 0.1)
+  ) {
+    currentAccount.movements.push(loanAmount);
+    updateUI(currentAccount);
+
+    toast('Loan is transferred successfully', 'success');
+  } else {
+    toast('You are not eligible in case of demanding loan', 'error');
+  }
+
+  inputLoanAmount.value = '';
+  inputLoanAmount.blur();
+});
 /////////////////////////////////////////////////
