@@ -1,0 +1,20 @@
+{
+  "name": "bankist",
+  "version": "1.0.0",
+  "description": "a simulation of banking app",
+  "main": "script.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch --env-file=.env ./script.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MahyarCode/BankistApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MahyarCode/BankistApp/issues"
+  },
+  "homepage": "https://github.com/MahyarCode/BankistApp#readme"
+}

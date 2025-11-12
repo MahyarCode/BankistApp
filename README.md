@@ -5,3 +5,7 @@ This project is based on the open-source work originally developed by [Jonas Sch
 The original repository can be found at his official github [repository](https://github.com/jonasschmedtmann/complete-javascript-course)
 
 All credit for the foundational code belongs to [Jonas Schmedtmann](https://github.com/jonasschmedtmann). My modifications and adaptations are intended solely for personal and educational purposes.
+
+# The Final Version
+
+The Last Commit is my version of the app in structured way and cleaned the workspace which makes easier to read and understand the code.
